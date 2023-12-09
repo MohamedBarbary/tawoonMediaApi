@@ -4,7 +4,7 @@ const app = require('./app');
 dotenv.config();
 
 mongoose
-  .connect('mongodb://127.0.0.1:27017/social', {
+  .connect(process.env.Mongo_Atlas, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
