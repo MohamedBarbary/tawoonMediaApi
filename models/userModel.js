@@ -89,7 +89,7 @@ userSchema.methods.generateVerificationToken = function () {
   const verificationToken = jwt.sign(
     { ID: user._id },
     process.env.USER_VERIFICATION_TOKEN_SECRET,
-    { expiresIn: '1d' }
+    { expiresIn: 1 * 60 * 60 }
   );
   return verificationToken;
 };
