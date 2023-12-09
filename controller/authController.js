@@ -61,15 +61,15 @@ exports.verify = async (req, res) => {
   }
   try {
     // Step 2 - Find user with matching ID
-    const user = await User.findByIdAndUpdate(
-      { _id: payload.ID },
-      { verified: true }
-    );
+    const user = await User.findByIdAndUpdate({ _id: payload.ID });
+
     if (!user) {
       return res.status(404).send({
         message: 'User does not  exists',
       });
     }
+    user.verified = true;
+    await user.save({ validateBeforeSave: false });
     return res.status(200).send({
       message: 'Account Verified',
     });
