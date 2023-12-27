@@ -11,22 +11,10 @@ const app = express();
 // app.use(helmet());
 app.use(cors());
 app.use((req, res, next) => {
-  try {
-    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-    // Handling preflight requests (OPTIONS)
-    if (req.method === 'OPTIONS') {
-      res.sendStatus(200);
-    } else {
-      next();
-    }
-  } catch (error) {
-    // Log the error for debugging purposes
-    console.error('CORS middleware error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  next();
 });
 app.use(express.json({ limit: '10kb' }));
 app.use(morgan('common'));
