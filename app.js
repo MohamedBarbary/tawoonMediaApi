@@ -17,8 +17,8 @@ app.use(morgan('common'));
 //     saveUninitialized: true,
 //   })
 // );
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use('/api/users', userRouter);
 app.all('*', (req, res, next) => {
   //   const err = new Error(`can't find ${req.originalUrl} on server!`);
