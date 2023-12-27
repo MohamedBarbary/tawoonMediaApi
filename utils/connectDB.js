@@ -5,7 +5,7 @@ mongoose.set('strictQuery', false);
 dotenv.config();
 
 const connectDB = catchAsyncErrors(async (req, res, next) => {
-  const conn = await mongoose.connect(`mongodb://127.0.0.1:27017/social`);
+  const conn = await mongoose.connect(process.env.Mongo_Atlas);
   console.log(`db okay ${conn.connection.host}`);
 });
 
