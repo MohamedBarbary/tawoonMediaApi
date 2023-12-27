@@ -132,9 +132,9 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
     next(new AppError('no user found invalid mail', 404));
   }
   //2-
-  if (!user.verified) {
-    next(new AppError('please verify your email', 400));
-  }
+  // if (!user.verified) {
+  //   next(new AppError('please verify your email', 400));
+  // }
   // 3- send token
   const resetToken = user.createResetPasswordToken();
   await user.save({ validateBeforeSave: false });
