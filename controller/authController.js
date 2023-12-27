@@ -68,7 +68,7 @@ exports.verify = catchAsyncError(async (req, res, next) => {
   }
   user.verified = true;
   await user.save({ validateBeforeSave: false });
-  res.status(200).send({
+  res.status(200).json({
     message: 'Account Verified',
   });
   next();
