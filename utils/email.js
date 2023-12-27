@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
-
-exports.sendMail = async (receiver, mailHtml) => {
+const catchAsyncError = require('./../utils/catchAsyncErrors');
+const mailgen = require('mailgen');
+exports.sendMail = catchAsyncError(async (receiver, mailHtml) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp.gmail.com',
@@ -14,18 +15,39 @@ exports.sendMail = async (receiver, mailHtml) => {
       rejectUnauthorized: false, // Accept self-signed certificates (not recommended for production)
     },
   });
+  const mailGenerator = new mailgen({
+    theme: 'default',
+    product: {
+      name: 'taawon',
+      link: 'taawon.com',
+    },
+  });
+  const response = {
+    body: {
+      name: 'welcome',
+      intro: 'welcome to taawon!',
+      table: {
+        data: [
+          {
+            item: `اتكى على اللينك ي شرديم انا مش هكر متخفش`,
+          },
+          {
+            description: mailHtml,
+          },
+        ],
+      },
+      outro: 'قوم نام ',
+    },
+  };
+  const mail = mailGenerator.generate(response);
 
   const mailOptions = {
     from: 'mohamed <mohamedalbarbary0@gmail.com>', // sender address
     to: receiver, // list of receivers
-    subject: 'verfiy mail', // Subject line
+    subject: 'verify mail', // Subject line
     text: 'Hello world?', // plain text body
-    html: mailHtml, // html body
+    html: mail, // html body
   };
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log('indeeeeed');
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+  transporter.sendMail(mailOptions);
+  console.log('indeeeeed');
+});

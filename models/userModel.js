@@ -64,8 +64,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
-    validatorCode: String,
-    validatorCodeExpire: Date,
     ResetPasswordToken: String,
     ResetPasswordExpire: Date,
   },
