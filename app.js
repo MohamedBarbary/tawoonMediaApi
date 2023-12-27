@@ -1,15 +1,13 @@
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const cors = require('cors');
 const session = require('express-session');
 const globalErrorHandler = require('./controller/errorController');
 const userRouter = require('./routes/userRouter');
 const AppError = require('./utils/appError');
 const passport = require('./utils/authFeatures.js/googlePassport');
 const app = express();
-// app.use(helmet());
-app.use(cors());
+app.use(helmet());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
