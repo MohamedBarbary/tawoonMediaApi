@@ -17,6 +17,13 @@ app.use((req, res, next) => {
 });
 
 app.use(helmet());
+app.use(
+  session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(express.json({ limit: '10kb' }));
 app.use(morgan('common'));
 app.use(passport.initialize());
