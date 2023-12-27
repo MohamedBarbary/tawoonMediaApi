@@ -8,11 +8,6 @@ const AppError = require('./utils/appError');
 const passport = require('./utils/authFeatures.js/googlePassport');
 const app = express();
 app.use(helmet());
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-});
 app.use(express.json({ limit: '10kb' }));
 app.use(morgan('common'));
 // app.use(
@@ -32,4 +27,10 @@ app.all('*', (req, res, next) => {
   next(new AppError(`can't find ${req.originalUrl} on server!`, 404));
 });
 app.use(globalErrorHandler);
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  next();
+});
 module.exports = app;
