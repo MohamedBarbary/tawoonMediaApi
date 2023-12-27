@@ -36,10 +36,10 @@ exports.signUp = catchAsyncError(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
   });
   const verificationToken = user.generateVerificationToken();
-  // const url = `${req.protocol}://${req.get(
-  //   'host'
-  // )}/api/users/verify/${verificationToken}`;
-  const url = 'how are you ';
+  const url = `${req.protocol}://${req.get(
+    'host'
+  )}/api/users/verify/${verificationToken}`;
+  // const url = 'how are you ';
   const html = `click <a href=${url}>here</a> to confirm your email.`;
   await emailSender.sendMail(user.email, html);
   createSendToken(user, 201, res);
@@ -139,10 +139,10 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
   const resetToken = user.createResetPasswordToken();
   await user.save({ validateBeforeSave: false });
   // 4- send an email
-  // const url = `${req.protocol}://${req.get(
-  //   'host'
-  // )}/api/users/resetPassword/${resetToken}`;
-  const url = `127.0.0.1:4001/api/users/resetPassword/${resetToken}`;
+  const url = `${req.protocol}://${req.get(
+    'host'
+  )}/api/users/resetPassword/${resetToken}`;
+  // const url = `127.0.0.1:4001/api/users/resetPassword/${resetToken}`;
   const html = `click <a href=${url}>here</a> to confirm your email.`;
   await emailSender.sendMail(user.email, html);
   res.status(200).json({
