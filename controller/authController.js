@@ -43,7 +43,6 @@ exports.signUp = catchAsyncError(async (req, res, next) => {
   const html = `click <a href=${url}>here</a> to confirm your email.`;
   await emailSender.sendMail(user.email, html);
   createSendToken(user, 201, res);
-  next();
 });
 //////////////////////////////////////////////////////
 exports.verify = catchAsyncError(async (req, res, next) => {
