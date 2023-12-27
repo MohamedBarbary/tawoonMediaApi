@@ -8,7 +8,7 @@ const userRouter = require('./routes/userRouter');
 const AppError = require('./utils/appError');
 const passport = require('./utils/authFeatures.js/googlePassport');
 const app = express();
-app.use(helmet());
+// app.use(helmet());
 app.use(cors());
 app.use((req, res, next) => {
   try {
