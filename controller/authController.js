@@ -43,13 +43,14 @@ exports.signUp = catchAsyncError(async (req, res, next) => {
   const html = `click <a href=${url}>here</a> to confirm your email.`;
   await emailSender.sendMail(user.email, html);
   createSendToken(user, 201, res);
+  next();
 });
 //////////////////////////////////////////////////////
 exports.verify = catchAsyncError(async (req, res, next) => {
   const token = req.params.token;
   // Check we have an id
   if (!token) {
-    return res.status(422).send({
+    return res.status(400).send({
       message: 'Missing Token',
     });
   }
@@ -67,7 +68,7 @@ exports.verify = catchAsyncError(async (req, res, next) => {
   }
   user.verified = true;
   await user.save({ validateBeforeSave: false });
-  res.status(200).json({
+  res.status(200).send({
     message: 'Account Verified',
   });
   next();
@@ -131,9 +132,9 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
     next(new AppError('no user found invalid mail', 404));
   }
   //2-
-  // if (!user.verified) {
-  //   next(new AppError('please verify your email', 400));
-  // }
+  if (!user.verified) {
+    next(new AppError('please verify your email', 400));
+  }
   // 3- send token
   const resetToken = user.createResetPasswordToken();
   await user.save({ validateBeforeSave: false });
